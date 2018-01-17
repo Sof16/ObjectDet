@@ -6,7 +6,7 @@ M=round (m/20);
 % m_new=10;
 % white=round(m_new/2);
 % black=mnew-white;
-for i=1:length(rnd)
+parfor i=1:length(rnd)
     % [startingRow, startingColumn, endingRow, endingColumn]
     n_new=fix(N*rnd(i,3));
     m_new=fix(M*rnd(i,4));
