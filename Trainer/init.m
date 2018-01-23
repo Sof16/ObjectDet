@@ -1,6 +1,11 @@
 clc
 clear all
 
+path = cd;
+cd ..\..;
+addpath(genpath('ObjectDet'));
+cd(path);
+
 %start parallel pool with default settings
 mypool = gcp('nocreate'); % If no pool, do not create new one.
 if isempty(mypool)
@@ -40,14 +45,14 @@ nr_im_total = nr_poz + nr_neg;
 global nr_features_total;
 nr_features_total = 180000;
 nr_features_haar = nr_features_total/5;
-global rnd1 rnd2 rnd3 rnd4 rnd5;
+global rnd1 rnd2 rnd3 rnd4 rnd5 rnd_all;
 rnd1=rand(nr_features_haar,4);
 rnd2=rand(nr_features_haar,4);
 rnd3=rand(nr_features_haar,4);
 rnd4=rand(nr_features_haar,4);
 rnd5=rand(nr_features_haar,4);
 %concatenate random vectors
-%rnd_all = cat(3,rnd1,rnd2,rnd3,rnd4,rnd5);
+rnd_all = [rnd1;rnd2;rnd3;rnd4;rnd5];
 
 X1_poz=[];
 X2_poz=[];
@@ -60,6 +65,13 @@ X3_neg=[];
 X4_neg=[];
 X5_neg=[];
 
+global W_im T;
+%number of iterations (T)
+T = 10;
+%initialize weights of images
+W_im(1:nr_im_total) = 1/nr_im_total;
+
+
 %size of images
-n = 768;
-m = 512;
+n = 320;
+m = 240;
